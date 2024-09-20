@@ -1,5 +1,5 @@
 .DS_STORE
 dist/
 node_modules/
-.flatpak_builder/
+.flatpak-builder/
 build-dir/

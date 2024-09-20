@@ -1,4 +1,4 @@
-app-id: com.github.GamePlayer-8.GoogleMessagesForDesktop
+app-id: com.github.GamePlayer8.GoogleMessagesForDesktop
 runtime: org.freedesktop.Platform
 runtime-version: 24.08
 sdk: org.freedesktop.Sdk

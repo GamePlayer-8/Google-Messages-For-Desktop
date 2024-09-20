@@ -3,3 +3,4 @@ dist/
 node_modules/
 .flatpak-builder/
 build-dir/
+*.tar.xz

@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kelyvin/Google-Messages-For-Desktop.git"
+    "url": "git+https://github.com/GamePlayer-8/Google-Messages-For-Desktop.git"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -28,9 +28,9 @@
   "author": "Kelvin Nguyen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kelyvin/Google-Messages-For-Desktop/issues"
+    "url": "https://github.com/GamePlayer-8/Google-Messages-For-Desktop/issues"
   },
-  "homepage": "https://github.com/kelyvin/Google-Messages-For-Desktop#readme",
+  "homepage": "https://github.com/GamePlayer-8/Google-Messages-For-Desktop#readme",
   "dependencies": {
     "nativefier": "^49.0.1"
   }

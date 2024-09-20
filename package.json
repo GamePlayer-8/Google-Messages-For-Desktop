@@ -25,7 +25,16 @@
   "engines": {
     "node": ">=12.0.0"
   },
-  "author": "Kelvin Nguyen",
+  "author": {
+    "name": "Kelvin Nguyen",
+    "email": "kelyvin@caffeinecoding.com"
+  },
+  "contributors": [
+    {
+      "name": "Chimmie Firefly",
+      "email": "gameplayer2019pl@tutamail.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/GamePlayer-8/Google-Messages-For-Desktop/issues"

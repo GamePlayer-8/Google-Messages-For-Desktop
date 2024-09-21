@@ -26,7 +26,7 @@ jobs:
       - name: Prepare environment
         run: |
             apt update
-            apt install -y flatpak flatpak-builder appstream appstream-compose npm nodejs tar xz-utils git git-lfs
+            apt install -y flatpak flatpak-builder appstream-compose npm nodejs tar xz-utils git git-lfs
 
       - name: Checkout branch
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -52,8 +52,7 @@ jobs:
       - name: Build Flatpak file
         run: |
             flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-            flatpak install --noninteractive -y org.flatpak.Builder
-            flatpak run org.flatpak.Builder --install-deps-from=flathub --install --force-clean build-dir io.github.GamePlayer_8.Google_Messages_For_Desktop.yaml
+            flatpak-builder --install-deps-from=flathub --install --force-clean build-dir io.github.GamePlayer_8.Google_Messages_For_Desktop.yaml
             flatpak build-bundle /var/lib/flatpak/repo google-messages.flatpak io.github.GamePlayer_8.Google_Messages_For_Desktop
 
       - name: Upload Flatpak

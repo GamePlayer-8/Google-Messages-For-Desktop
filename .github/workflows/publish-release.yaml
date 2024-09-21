@@ -45,6 +45,10 @@ jobs:
           name: raw
           path: GoogleMessages.tar.xz
 
+      - name: Set up Git to allow file transport
+        run: |
+          git config --global --add protocol.file.allow always
+
       - name: Build Flatpak file
         run: |
             flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

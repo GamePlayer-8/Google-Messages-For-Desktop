@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 the Chromium authors, with modifications -->
+<component type="desktop">
+  <id>com.github.GamePlayer8.GoogleMessagesDesktop</id>
+  <launchable type="desktop-id">com.github.GamePlayer8.GoogleMessagesDesktop</launchable>
+  <name>Google Messages</name>
+  <icon type="stock">com.github.GamePlayer8.GoogleMessagesForDesktop</icon>
+  <summary>The SMS and MMS app from Google</summary>
+  <developer id="com.google">
+    <name>Google</name>
+    <contact>contact@gmail.com</contact>
+    <url type="homepage">https://messages.google.com/</url>
+  </developer>
+  <metadata_license>MIT</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+  <url type="homepage">https://messages.google.com/</url>
+  <description>
+    <p>
+      Google Messages is an application for reading SMS and MMS from a phone.
+      It's using NPX PWA for messages.google.com/web
+    </p>
+   <p>NOTE: This wrapper is not verified by, affiliated with, or supported by Google.</p>
+  </description>
+  <categories>
+    <category>Network</category>
+    <category>InstantMessaging</category>
+  </categories>
+  <releases>
+    <release version="1.4.2" date="2024-09-21">
+      <description></description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1">
+  </content_rating>
+  <update_contact>gameplayer2019pl@tutamail.com</update_contact>
+</component>

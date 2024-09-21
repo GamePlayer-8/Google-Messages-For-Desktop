@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Google Messages
+Comment=Send and receive messages from your Android Phone
+Keywords=Message;Messaging;Android;SMS
+Exec=/app/bin/google-messages %U
+Icon=com.github.GamePlayer8.GoogleMessagesForDesktop
+Terminal=false
+Type=Application
+Categories=Network;
+StartupWMClass=android-messages-nativefier-f3cfa3

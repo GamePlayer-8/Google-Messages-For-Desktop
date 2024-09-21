@@ -26,7 +26,7 @@ jobs:
       - name: Prepare environment
         run: |
             apt update
-            apt install -y flatpak flatpak-builder appstream npm nodejs tar xz-utils git git-lfs
+            apt install -y flatpak flatpak-builder appstream appstream-compose npm nodejs tar xz-utils git git-lfs
 
       - name: Checkout branch
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7

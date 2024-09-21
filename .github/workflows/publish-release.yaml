@@ -28,14 +28,14 @@ jobs:
 
       - name: Prepare environment
         run: |
-            - apt update
-            - apt install -y flatpak flatpak-builder appstream npm nodejs tar xz-utils
+            apt update
+            apt install -y flatpak flatpak-builder appstream npm nodejs tar xz-utils
 
       - name: Build NPX
         run: |
-            - npm install
-            - npm run linux
-            - tar -cJvf GoogleMessages.tar.xz dist/Linux/GoogleMessages-linux-x64
+            npm install
+            npm run linux
+            tar -cJvf GoogleMessages.tar.xz dist/Linux/GoogleMessages-linux-x64
 
       - name: Upload binary build
         uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
@@ -45,9 +45,9 @@ jobs:
 
       - name: Build Flatpak file
         run: |
-            - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-            - flatpak-builder --install-deps-from=flathub --install --force-clean build-dir io.github.GamePlayer_8.Google_Messages_For_Desktop.yaml
-            - flatpak build-bundle /var/lib/flatpak/repo google-messages.flatpak io.github.GamePlayer_8.Google_Messages_For_Desktop
+            flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+            flatpak-builder --install-deps-from=flathub --install --force-clean build-dir io.github.GamePlayer_8.Google_Messages_For_Desktop.yaml
+            flatpak build-bundle /var/lib/flatpak/repo google-messages.flatpak io.github.GamePlayer_8.Google_Messages_For_Desktop
 
       - name: Upload Flatpak
         uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6

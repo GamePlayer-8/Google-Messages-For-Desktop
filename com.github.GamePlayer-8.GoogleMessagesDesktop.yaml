@@ -1,17 +1,80 @@
 app-id: com.github.GamePlayer8.GoogleMessagesForDesktop
 runtime: org.freedesktop.Platform
-runtime-version: 24.08
+runtime-version: "24.08"
 sdk: org.freedesktop.Sdk
 command: google-messages
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /man
+  - /share/aclocal
+  - /share/devhelp
+  - /share/gir-1.0
+  - /share/gtk-doc
+  - /share/man
+  - /share/pkgconfig
+  - /share/vala
+  - /lib/systemd
+  - '*.la'
+  - '*.a'
 finish-args:
-  - --share=network
+  - --device=all
+  - --env=GTK_PATH=/app/lib/gtkmodules
   - --share=ipc
+  - --share=network
+  - --socket=cups
+  - --socket=pcsc # FIDO2
+  - --socket=pulseaudio
   - --socket=x11
   - --socket=wayland
-  - --env=DISPLAY
-  - --filesystem=home
+  - --require-version=1.8.2
+  - --system-talk-name=org.bluez
+  - --system-talk-name=org.freedesktop.UPower
+  - --talk-name=org.freedesktop.FileManager1
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.freedesktop.ScreenSaver
+  - --talk-name=org.freedesktop.secrets
+  - --talk-name=org.gnome.SessionManager
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --system-talk-name=org.freedesktop.Avahi
+  - --own-name=org.mpris.MediaPlayer2.chromium.*
+  - --filesystem=/run/.heim_org.h5l.kcm-socket
+  - --filesystem=host-etc
+  - --filesystem=xdg-run/pipewire-0
+  - --filesystem=xdg-documents
+  - --filesystem=xdg-download
+  - --filesystem=xdg-music
+  - --filesystem=xdg-videos
+  - --filesystem=xdg-pictures
+  # For GNOME proxy resolution
+  - --filesystem=xdg-run/dconf
+  - --filesystem=~/.config/dconf:ro
+  - --talk-name=ca.desrt.dconf
+  - --env=DCONF_USER_CONFIG_DIR=.config/dconf
+  - --env=GIO_EXTRA_MODULES=/app/lib/gio/modules
+  - --env=GSETTINGS_BACKEND=dconf
+  # For KDE proxy resolution (KDE5 only)
+  - --filesystem=~/.config/kioslaverc
+rename-desktop-file: google-messages.desktop
+rename-appdata-file: google-messages
+rename-icon: android-messages
+separate-locales: false
+build-options:
+  no-debuginfo: true
+tags:
+  - proprietary
 
 modules:
+  - name: zypak
+    sources:
+      - type: git
+        url: https://github.com/refi64/zypak
+        tag: v2024.01.17
+        commit: ded79a2f8a509adc21834b95a9892073d4a91fdc
+        x-checker-data:
+          type: git
+          tag-pattern: ^v([\d.]+)$
+
   - name: google-messages-for-desktop
     buildsystem: simple
     build-options:
@@ -22,15 +85,45 @@ modules:
     build-commands:
       - npm install
       - npm run linux
-      - mkdir /app/bin /app/share
-      - mv dist/Linux/GoogleMessages-linux-x64 /app/share/google-messages
-      - ln -s /app/share/google-messages/GoogleMessages /app/bin/google-messages
+      - mv dist/Linux/GoogleMessages-linux-x64 /app/GoogleMessages
+      - |
+          for icon in 16 22 24 32 48 64 128 256; do
+            dir=/app/share/icons/hicolor/${icon}x${icon}/apps
+            mkdir -p $dir
+            cp google-messages-logo.png $dir/android-messages.png
+          done
+      - mkdir -p /app/share/{appdata,applications}
+      - cp *.desktop /app/share/applications/
+      - cp *.xml /app/share/appdata/google-messages
+      - rm -f /app/GoogleMessages/chrome-sandbox
+      - install -Dm 755 stub_sandbox.sh /app/bin/stub_sandbox
+      - install -Dm 755 /app/bin/stub_sandbox /app/bin/chrome-sandbox
+      - install -Dm 755 /app/bin/stub_sandbox /app/GoogleMessages/chrome-sandbox
     sources:
       - type: archive
         url: https://nodejs.org/dist/v18.17.1/node-v18.17.1-linux-x64.tar.xz
         sha256: 07e76408ddb0300a6f46fcc9abc61f841acde49b45020ec4e86bb9b25df4dced
-        dest-filename: node.tar.xz
         strip-components: 0
       - type: git
-        url: https://github.com/kelyvin/Google-Messages-For-Desktop.git
+        url: https://github.com/GamePlayer-8/Google-Messages-For-Desktop.git
         tag: v1.4.2
+      - type: file
+        path: google-messages-logo.png
+      - type: file
+        path: google-messages.desktop
+      - type: file
+        path: com.github.GamePlayer-8.GoogleMessagesDesktop.metainfo.xml
+      - type: file
+        path: LICENSE.txt
+      - type: script
+        dest-filename: stub_sandbox.sh
+        commands:
+          - 'echo "Stub sandbox ignoring command: $@"'
+          - exit 1
+  - name: files
+    buildsystem: simple
+    build-commands:
+      - 'install -Dm 755 google-messages.sh /app/bin/google-messages'
+    sources:
+      - type: file
+        path: google-messages.sh

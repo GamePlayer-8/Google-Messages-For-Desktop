@@ -23,16 +23,15 @@ jobs:
       image: ubuntu:22.04
       options: --privileged --user root
     steps:
+      - name: Prepare environment
+        run: |
+            apt update
+            apt install -y flatpak flatpak-builder appstream npm nodejs tar xz-utils git git-lfs
+
       - name: Checkout branch
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ inputs.target }}
-          submodules: recursive
-
-      - name: Prepare environment
-        run: |
-            apt update
-            apt install -y flatpak flatpak-builder appstream npm nodejs tar xz-utils
 
       - name: Build NPX
         run: |

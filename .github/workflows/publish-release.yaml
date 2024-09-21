@@ -102,7 +102,7 @@ jobs:
             const ref = await github.rest.git.getRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "heads/develop",
+              ref: "heads/main",
             });
             return ref.data.object.sha;
 

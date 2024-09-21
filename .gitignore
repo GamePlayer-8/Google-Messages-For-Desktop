@@ -5,3 +5,7 @@ node_modules/
 build-dir/
 *.tar.xz
 yarn.lock
+*.flatpak
+metadata
+package-lock.json
+var

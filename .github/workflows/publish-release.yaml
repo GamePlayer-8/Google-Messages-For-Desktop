@@ -84,7 +84,7 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             echo "::set-output name=tag::${{ github.event.inputs.tag }}"
           else
-            echo "::set-output name=tag::"(echo "${{ github.ref }}" | sed 's/refs\/tags\///')"
+            echo "::set-output name=tag::$(echo "${{ github.ref }}" | sed 's/refs\/tags\///')"
           fi
 
       - name: Get previous tag

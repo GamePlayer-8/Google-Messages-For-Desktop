@@ -26,6 +26,9 @@
     <category>InstantMessaging</category>
   </categories>
   <releases>
+    <release version="1.4.8" date="2024-09-22">
+      <description>Update the app icon.</description>
+    </release>
     <release version="1.4.7" date="2024-09-22">
       <description></description>
     </release>

@@ -1,6 +1,6 @@
 {
   "name": "google-messages-for-desktop",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "A \"native-like\" desktop app for Google Messages. ",
   "main": "index.js",
   "scripts": {

@@ -19,47 +19,30 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:22.04
-      options: --privileged --user root
     steps:
-      - name: Prepare environment
-        run: |
-            apt update
-            apt install -y flatpak flatpak-builder appstream-compose npm nodejs tar xz-utils git git-lfs
-
       - name: Checkout branch
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ inputs.target }}
 
-      - name: Build NPX
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run docker compose
         run: |
-            npm install
-            npm run linux
-            tar -cJvf GoogleMessages.tar.xz dist/Linux/GoogleMessages-linux-x64
+            /bin/sh build.sh
 
       - name: Upload binary build
         uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
         with:
           name: raw
-          path: GoogleMessages.tar.xz
-
-      - name: Set up Git to allow file transport
-        run: |
-          git config --global --add protocol.file.allow always
-
-      - name: Build Flatpak file
-        run: |
-            flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-            flatpak-builder --install-deps-from=flathub --install --force-clean build-dir io.github.GamePlayer_8.Google_Messages_For_Desktop.yaml
-            flatpak build-bundle /var/lib/flatpak/repo google-messages.flatpak io.github.GamePlayer_8.Google_Messages_For_Desktop
+          path: build/GoogleMessages.tar.xz
 
       - name: Upload Flatpak
         uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
         with:
           name: flatpak
-          path: google-messages.flatpak
+          path: build/google-messages.flatpak
 
   check-if-release-needed:
     runs-on: ubuntu-latest

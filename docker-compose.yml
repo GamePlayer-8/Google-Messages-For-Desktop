@@ -1,0 +1,10 @@
+name: runtime-gameplayer-8
+services:
+  runtime-gameplayer-8:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    volumes:
+      - ./build:/dist
+    restart: "no"

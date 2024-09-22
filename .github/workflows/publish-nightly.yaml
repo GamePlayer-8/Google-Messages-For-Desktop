@@ -1,27 +1,16 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: Publish Release
+name: Publish Nightly
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [main]
   workflow_dispatch:
   workflow_call:
     inputs:
       target:
         required: true
         type: string
-      tag:
-        type: string
-        description: 'Tag to release (e.g. v1.0.0)'
-        required: true
-        default: 'v1.0.0'
-      prerelease:
-          description: "Prerelease"
-          required: false
-          default: false
-          type: boolean
 
 env:
   DEBIAN_FRONTEND: 'noninteractive'
@@ -71,40 +60,16 @@ jobs:
         with:
           name: raw
           path: .
-
-      - name: Set tag from input or trigger
-        id: set_tag
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "::set-output name=tag::${{ github.event.inputs.tag }}"
-          else
-            echo "::set-output name=tag::${{ github.ref }}"
-          fi
-
-      - name: Get previous tag
-        id: prev_tag
-        run: |
-          # Find the previous tag, excluding the current tag
-          prev_tag=$(git describe --tags --abbrev=0 ${{ steps.set_tag.outputs.tag }}^)
-          echo "::set-output name=prev_tag::${prev_tag}"
-
+          
       - name: Publish release
         uses: notpeelz/action-gh-create-release@v5.0.1
         with:
           target: ${{ inputs.target }}
-          tag: ${{ steps.set_tag.outputs.tag }}
-          prerelease: ${{ inputs.prerelease }}
-          draft: false
+          tag: nightly
+          prerelease: true
           strategy: replace
-          title: Release ${{ steps.set_tag.outputs.tag }}
-          body: |
-              ## Changelog
-
-              Changes since the last release: [${{ steps.prev_tag.outputs.prev_tag }}...${{ steps.set_tag.outputs.tag }}](https://github.com/${{ github.repository }}/compare/${{ steps.prev_tag.outputs.prev_tag }}...${{ steps.set_tag.outputs.tag }})
-
-              ---
-              
-              Build made in GitHub Actions.
+          title: "Automatic build"
+          body: "Automatic build"
           files: |
             google-messages.flatpak
             GoogleMessages.tar.xz

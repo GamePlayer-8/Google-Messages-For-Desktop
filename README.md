@@ -22,6 +22,16 @@ I have provided utility scripts through the `package.json` to automatically rege
 - `npm run windows:tray` | Rebuild the windows app w/ tray icon support
 - `npm run linux` | Rebuild the linux app
 
+## Flatpak
+
+### Quick build
+
+You're required to have docker compose installed on your (Linux) machine.
+
+ - `sh build.sh`
+
+Your files will be generated at `./build/`.
+
 ## Windows
 
 ### Notifications
@@ -76,3 +86,7 @@ StartupWMClass=android-messages-nativefier-f3cfa3
 ```
 
 Be sure to replace /path/to/installfolder/ with your actual installation folder and Android Messages should appear along your other native apps.
+
+# Developers note
+
+This project is a fork, aiming to provide Flatpak support on Google Messages and is not affiliated with Google, neither with Flathub organization.

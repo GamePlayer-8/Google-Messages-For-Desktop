@@ -91,7 +91,7 @@ jobs:
         id: prev_tag
         run: |
           # Find the previous tag, excluding the current tag
-          prev_tag=$(git describe --tags --abbrev=0 ${{ steps.set_tag.outputs.tag }}^)
+          prev_tag=$(git describe --abbrev=0 --tags --exclude="$(git describe --abbrev=0 --tags ${{ steps.set_tag.outputs.tag }})")
           echo "::set-output name=prev_tag::${prev_tag}"
 
       - name: Publish release

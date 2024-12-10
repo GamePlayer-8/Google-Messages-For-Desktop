@@ -2,7 +2,11 @@
 
 set -ex
 
-apk add --no-cache npm nodejs tar xz
+base_version="$(head -n 1 base_version.txt)"
+package_version="${base_version}-${1:-0}"
+
+sed -i "s/SOFTVER/${base_version}/g" *.json
+sed -i "s/PACKVER/${package_version}/g" *.json
 
 npm install
 npm run linux
